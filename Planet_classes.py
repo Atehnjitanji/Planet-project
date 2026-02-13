@@ -51,24 +51,32 @@ for index, row in dff.iterrows():
 '''for key, val in planet_d.items():
     print_largest(val)
     print(key, [moon.name for moon in val.moon_list])'''
-
+for key, val in moon_d.items():
+    val.update_planet()
 
 def order_planet(planet_ls):
-    #planet_data = pd.DataFrame(planet_ls.keys(), columns=['Planets'])
-    planet_data=planet_ls
-    #planet_data = planet_data.set_index('Planets')
+    planet_dict=dict(planet_ls)
+    moons = {}
     for index, row in df.iterrows():
         if row['isPlanet'] is True:
-            planet_data[index] = row['semimajorAxis_AU']
-            #planet_data.loc[index] = row['semimajorAxis_AU']
-    planet_data = pd.DataFrame({'Planet':planet_data.keys(),'Distance':planet_data.values()})
+            planet_dict[index] = row['semimajorAxis_AU']
+    planet_data = pd.DataFrame({'Planet':planet_dict.keys(),'Distance':planet_dict.values()})
     planet_data.sort_values(by='Distance',inplace=True)
-    '''i = 0
-    while i < planet_data.shape[0]:
-        if i > i+1:
-            df.loc[[i,i+1]] = df.loc[[i+1,i]].values
-            i = i + 1
-        else:
-            i = i + 1'''
-    print(planet_data['Planet'])
+    
+    for i in planet_ls.values():
+        moons_list2 = i.moon_list
+        for l in moons_list2:
+            moons_list2[moons_list2.index(l)]=l.name
+        moons[i.name]= moons_list2
+    for index, row in planet_data.iterrows():
+        print(row['Planet'],row['Distance'],moons[row['Planet']])
+
 order_planet(planet_d)
+
+
+'''def no_moon(planet_ls):
+    no_moon=[]
+    for i in planet_ls:
+        print(i)
+        if i.moon_list == []:
+            no_moon.append(i.name)'''
