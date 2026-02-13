@@ -73,10 +73,10 @@ def order_planet(planet_ls):
 
 order_planet(planet_d)
 
-
-'''def no_moon(planet_ls):
+def no_moon(planet_ls):
     no_moon=[]
-    for i in planet_ls:
-        print(i)
+    for i in planet_ls.values():
         if i.moon_list == []:
-            no_moon.append(i.name)'''
+            no_moon.append(i.name)
+    print(no_moon)
+no_moon(planet_d)
